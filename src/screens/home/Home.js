@@ -14,14 +14,7 @@ const Home = ({ navigation }) => {
       const storedForms = await AsyncStorage.getItem('forms');
       if (storedForms) {
         const formsData = JSON.parse(storedForms);
-
-
-        const maskedForms = formsData.map((form) => ({
-          ...form,
-          senha: maskPassword(form.senha),
-        }));
-
-        setForms(maskedForms);
+        setForms(formsData);
       }
     } catch (error) {
       console.error('Erro ao carregar formulários:', error);
@@ -91,7 +84,7 @@ const Home = ({ navigation }) => {
           <View style={styles.formContainer}>
             <Text>{item.nome}</Text>
             <Text>{item.email}</Text>
-            <Text>{item.senha}</Text>
+            <Text>{maskPassword(item.senha)}</Text>
             <View style={styles.buttonContainer}>
               <Button title="Editar" onPress={() => editForm(index)} />
               <Button title="Excluir" onPress={() => deleteForm(index)} />
